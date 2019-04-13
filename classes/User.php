@@ -35,14 +35,14 @@ class User
         if($query->num_rows)
         {
             $user=$query->fetch_assoc();
-            $id=$user['id'];
-            $balance=$user['balance'];
-            $status=$user['status'];
+            $this->id=$user['id'];
+            $this->balance=$user['balance'];
+            $this->status=$user['status'];
         } else {
             $this->connect->query("INSERT INTO `users` (vk_id) VALUES ({$this->vk_id})");
             $this->id=$this->connect->insert_id;
-            $balance="0,0000";
-            $status=1;
+            $this->balance=0.0000;
+            $this->status=1;
         }
     }
 

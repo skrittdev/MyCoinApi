@@ -6,7 +6,7 @@
  * Time: 11:40
  */
 
-require 'classes/Errors.php';
+require 'classes/ApiErrors.php';
 require 'classes/User.php';
 
 switch ($_GET['method'])
@@ -16,8 +16,8 @@ switch ($_GET['method'])
         {
             $user = new User($_GET['vk_id']);
             die($user->getUserDataJson());
-        } else die(Errors::getJsonError(2));
+        } else die(ApiErrors::getJsonError(2));
     }
     break;
-    default: die(Errors::getJsonError(0));
+    default: die(ApiErrors::getJsonError(0));
 }

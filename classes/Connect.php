@@ -6,7 +6,7 @@
  * Time: 12:08
  */
 
-require 'Errors.php';
+require 'ApiErrors.php';
 
 class Connect
 {
@@ -23,7 +23,7 @@ class Connect
     {
         $this->connect = new mysqli($this->host,$this->user,$this->password,$this->db);
         if(!$this->connect)
-            die(Errors::getJsonError(1));
+            die(ApiErrors::getJsonError(1));
         $this->connect->set_charset('urf-8');
     }
 

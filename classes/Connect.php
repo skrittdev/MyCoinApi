@@ -6,8 +6,6 @@
  * Time: 12:08
  */
 
-require 'ApiErrors.php';
-
 class Connect
 {
     private $host="localhost";

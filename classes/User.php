@@ -6,7 +6,7 @@
  * Time: 12:05
  */
 
-require 'Connect.php';
+require_once 'Connect.php';
 
 class User
 {

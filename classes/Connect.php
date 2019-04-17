@@ -8,7 +8,7 @@
 
 class Connect
 {
-    private $host="localhost";
+    private $host="93.88.78.36";
     private $user="jnxdgqdx_bot";
     private $db="jnxdgqdx_bot";
     private $password="300403";

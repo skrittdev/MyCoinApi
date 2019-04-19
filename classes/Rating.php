@@ -51,4 +51,15 @@ class Rating
         }
         return json_encode($json,JSON_UNESCAPED_UNICODE);
     }
+
+    public function getTopUsersIds()
+    {
+        $temp=array();
+        $sql="SELECT * FROM `users` ORDER BY `balance` DESC LIMIT 100";
+        $query=$this->connect->query($sql);
+        while($row = $query->fetch_assoc()){
+            array_push($temp,$row['vk_id']);
+        }
+        return $temp;
+    }
 }

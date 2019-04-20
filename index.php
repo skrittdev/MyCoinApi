@@ -16,7 +16,7 @@ switch ($_GET['method'])
     case "getUser": {
         if($_GET['vk_id'] && $_GET['vk_id'] != "null")
         {
-            $user = new User($_GET['vk_id'],$_GET['friends']);
+            $user = new User($_GET['vk_id']);
             die($user->getUserDataJson());
         } else die(ApiErrors::getJsonError(2));
     }
@@ -24,6 +24,18 @@ switch ($_GET['method'])
     case "getTopAll": {
             $rating = new Rating();
             die($rating->getTopUsersJson());
+    }
+        break;
+    case "getTopFriends": {
+        if($_GET['friends'] && $_GET['friends'] != "null") {
+            $rating = new Rating();
+            $_GET['friends']=base64_decode($_GET['friends']);
+            if($_GET['vk_id'] && $_GET['vk_id'] != "null")
+                $_GET['friends']="{$_GET['friends']}{$_GET['vk_id']}";
+            die($rating->getTopFriendsJson($_GET['friends']));
+        } else {
+            die("null");
+        }
     }
         break;
     default: die(ApiErrors::getJsonError(0));

@@ -7,6 +7,7 @@
  */
 require_once 'Connect.php';
 require_once 'VKClient.php';
+require_once 'User.php';
 
 class Rating
 {
@@ -61,5 +62,30 @@ class Rating
             array_push($temp,$row['vk_id']);
         }
         return $temp;
+    }
+
+    public function getTopFriendsJson($friends)
+    {
+        $user=new User(null);
+        $new_friends=array();
+        $friends=explode(",",$friends);
+        foreach ($friends as $friend)
+        {
+            if($friend) {
+                $info = $this->vkclient->getUsersInfo($friend)[0];
+                $temp = array(
+                    'vk_id' => $friend,
+                    'first_name' => $info['first_name'],
+                    'last_name' => $info['last_name'],
+                    'photo' => $info['photo_100'],
+                    'balance' => $user->getUserBalanceByVkId($friend)
+                );
+                array_push($new_friends, $temp);
+            }
+        }
+        usort($new_friends, function($a, $b) {
+            return $b['balance'] - $a['balance'];
+        });
+        return json_encode($new_friends);
     }
 }

@@ -23,37 +23,14 @@ class User
      * User constructor.
      * @param $vk_id
      */
-    public function __construct($vk_id,$friends)
+    public function __construct($vk_id)
     {
         $this->vkclient=new VKClient("a0c47699a0c47699a0c4769937a0ad9e88aa0c4a0c47699fc6bf7b127f14b99e12630c5");
         $this->vk_id = $vk_id;
         $connect=new Connect();
         $this->connect=$connect->getConnect();
+        if($vk_id)
         $this->initUser();
-        $friends=explode(",",$friends);
-        $rating=new Rating();
-        $ratingids=$rating->getTopUsersIds();
-        foreach ($friends as $friend)
-        {
-            if($friend) {
-                if (false !== ($pos = array_search($friend, $ratingids))) {
-                    $info = $this->vkclient->getUsersInfo($friend)[0];
-                    $temp = array(
-                        'vk_id' => $friend,
-                        'first_name' => $info['first_name'],
-                        'last_name' => $info['last_name'],
-                        'photo' => $info['photo_100'],
-                        'balance' => $this->getUserBalanceByVkId($friend)
-                    );
-                    array_push($this->friends, $temp);
-                }
-            }
-        }
-        usort($this->friends, function($a, $b) {
-            return $b['balance'] - $a['balance'];
-        });
-        if(count($this->friends) > 100)
-        $this->friends=array_slice($this->friends, 0, 100);
     }
 
     public function initUser()
@@ -129,7 +106,6 @@ class User
             'vk_id' => $this->vk_id,
             'balance' => $this->balance,
             'status' => $this->status,
-            'friends' => json_encode($this->friends),
         );
         return json_encode($data);
     }

@@ -58,4 +58,18 @@ class VKClient
         $result=file_get_contents('https://api.vk.com/method/friends.get?'. $get_params);
         return json_decode($result,true)['response']['items'];
     }
+
+    public function searchUsers($q)
+    {
+        $request_params = array(
+            'access_token' => $this->access_token,
+            'fields' => 'photo_100',
+            'q' => $q,
+            'v' => '5.95',
+            'lang' => 'ru'
+        );
+        $get_params = http_build_query($request_params);
+        $result=file_get_contents('https://api.vk.com/method/users.search?'. $get_params);
+        return json_decode($result,true)['response']['items'];
+    }
 }

@@ -68,7 +68,6 @@ class Rating
     {
         $user=new User(null);
         $new_friends=array();
-        $friends=explode(",",$friends);
         foreach ($friends as $friend)
         {
             if($friend) {
